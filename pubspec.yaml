@@ -1,0 +1,38 @@
+name: apna_tractor
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - lib/presentation/assets/images/tractors/tractor_banner.png
+    - lib/presentation/assets/images/brands/deutz fahr.png
+    - lib/presentation/assets/images/brands/eicher.png
+    - lib/presentation/assets/images/brands/farmtrac.png
+    - lib/presentation/assets/images/brands/john deere.png
+    - lib/presentation/assets/images/brands/kabota.png
+    - lib/presentation/assets/images/brands/mahindra.png
+    - lib/presentation/assets/images/brands/massey feguason.png
+    - lib/presentation/assets/images/brands/new holland.png
+    - lib/presentation/assets/images/brands/powertrac.png
+    - lib/presentation/assets/images/brands/sonalika.jpg
+    - lib/presentation/assets/images/brands/swaraj.png
+    
+
