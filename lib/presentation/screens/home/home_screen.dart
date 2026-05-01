@@ -13,96 +13,67 @@ import 'common/hp_filter_screen.dart';
 import 'common/brand_selection_screen.dart'; 
 import 'common/ac_cabin_screen.dart'; 
 
-class HomeScreen extends StatelessWidget {
+// Naya Compare Screen Import karein (Apne folder structure ke hisab se check karlein)
+import '../compare/comparison_ui.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  // Navigation index manage karne ke liye
+  int _selectedIndex = 0;
+
+  // Click hone par index badalne ka function
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // Pages ki list (Index 3 par Compare Screen hai)
+    final List<Widget> _pages = [
+      _buildHomeBody(context), // Index 0: Pura Home ka purana content
+      const Center(child: Text("News Page Content Here")), // Index 1
+      const Center(child: Text("Videos Page Content Here")), // Index 2
+      const ComparisonUIScreen(), // Index 3: Aapka naya Compare Screen
+      const Center(child: Text("Testing Page Content Here")), // Index 4
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: const CustomDrawer(),
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black, size: 30),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: const Row(
-          children: [
-            Icon(Icons.agriculture, color: AppColors.primaryTeal, size: 28),
-            SizedBox(width: 8),
-            Text('ApnaTractor', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-                boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5))],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSearchBar(),
-                  const SizedBox(height: 20),
-                  const Text("Filter", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 12),
-                  _buildFilterList(context), 
-                ],
+      // Sirf Home index (0) par hi main AppBar dikhega
+      appBar: _selectedIndex == 0 
+        ? AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: const Icon(Icons.menu, color: Colors.black, size: 30),
+                onPressed: () => Scaffold.of(context).openDrawer(),
               ),
             ),
-            
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 10),
-                  _buildPromoBanner(context),
-                  const SizedBox(height: 30),
-                  const Text("Explore Items!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 25),
-                  
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CategoryCard(
-                        title: "Tractor", 
-                        icon: Icons.agriculture, 
-                        nextScreen: const TractorDetailPage(), 
-                      ),
-                      CategoryCard(
-                        title: "Harvester", 
-                        icon: Icons.grain, 
-                        nextScreen: const HarvesterListPage(),
-                      ),
-                      CategoryCard(
-                        title: "Implement", 
-                        icon: Icons.settings_input_component, 
-                        nextScreen: const ImplementPage(),
-                      ),
-                      const CategoryCard(
-                        title: "Equipment", 
-                        icon: Icons.build,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+            title: const Row(
+              children: [
+                Icon(Icons.agriculture, color: AppColors.primaryTeal, size: 28),
+                SizedBox(width: 8),
+                Text('ApnaTractor', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              ],
             ),
-          ],
-        ),
-      ),
+          ) 
+        : null, // Baki screens (jaise Compare) apna khud ka AppBar use karengi
+      
+      body: _pages[_selectedIndex],
+
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         backgroundColor: AppColors.navGrey,
         selectedItemColor: AppColors.primaryTeal,
         unselectedItemColor: AppColors.primaryTeal.withOpacity(0.6),
@@ -113,6 +84,75 @@ class HomeScreen extends StatelessWidget {
           BottomNavigationBarItem(icon: Icon(Icons.play_circle), label: "VIDEOS"),
           BottomNavigationBarItem(icon: Icon(Icons.compare_arrows), label: "COMPARE"),
           BottomNavigationBarItem(icon: Icon(Icons.agriculture), label: "TESTING"),
+        ],
+      ),
+    );
+  }
+
+  // --- Home Content Widgets (Aapka Purana Code) ---
+
+  Widget _buildHomeBody(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5))],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildSearchBar(),
+                const SizedBox(height: 20),
+                const Text("Filter", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 12),
+                _buildFilterList(context), 
+              ],
+            ),
+          ),
+          
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 10),
+                _buildPromoBanner(context),
+                const SizedBox(height: 30),
+                const Text("Explore Items!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 25),
+                
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CategoryCard(
+                      title: "Tractor", 
+                      icon: Icons.agriculture, 
+                      nextScreen: const TractorDetailPage(), 
+                    ),
+                    CategoryCard(
+                      title: "Harvester", 
+                      icon: Icons.grain, 
+                      nextScreen: const HarvesterListPage(),
+                    ),
+                    CategoryCard(
+                      title: "Implement", 
+                      icon: Icons.settings_input_component, 
+                      nextScreen: const ImplementPage(),
+                    ),
+                    const CategoryCard(
+                      title: "Equipment", 
+                      icon: Icons.build,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

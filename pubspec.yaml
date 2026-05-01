@@ -34,5 +34,13 @@ flutter:
     - lib/presentation/assets/images/brands/powertrac.png
     - lib/presentation/assets/images/brands/sonalika.jpg
     - lib/presentation/assets/images/brands/swaraj.png
-    
+    - lib/presentation/assets/images/ac/1.jpeg
+    - lib/presentation/assets/images/ac/2.jpeg
+    - lib/presentation/assets/images/ac/3.jpeg
+    - lib/presentation/assets/images/ac/compare1.jpeg
+    - lib/presentation/assets/images/ac/compare2.jpeg
+    - lib/presentation/assets/images/ac/compare3.jpeg
+
+
+
 

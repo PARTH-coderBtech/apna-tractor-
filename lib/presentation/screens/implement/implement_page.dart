@@ -8,53 +8,55 @@ class ImplementPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        // Yahan fix kiya gaya hai: Padding widget ka use kiya hai margin ki jagah
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
-          child: CircleAvatar(
-            backgroundColor: Colors.white.withOpacity(0.8),
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          // --- Upper Half: Implement Photo ---
-          Container(
-            height: MediaQuery.of(context).size.height * 0.5,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(AppImages.tractorBanner), 
-                fit: BoxFit.cover,
+      backgroundColor: Colors.white,
+      body: CustomScrollView(
+        slivers: [
+          // --- 1. Dynamic Top Image (SliverAppBar) ---
+          SliverAppBar(
+            expandedHeight: 400,
+            pinned: true,
+            backgroundColor: AppColors.primaryTeal,
+            elevation: 0,
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                backgroundColor: Colors.white.withOpacity(0.9),
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.black, size: 20),
+                  onPressed: () => Navigator.pop(context),
+                ),
               ),
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.5),
-                    Colors.transparent,
-                  ],
-                ),
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    AppImages.tractorBanner, // Image path
+                    fit: BoxFit.cover,
+                  ),
+                  // Gradient for better text visibility
+                  Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.center,
+                        colors: [
+                          Colors.black.withOpacity(0.7),
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
 
-          // --- Lower Half: Content ---
-          Expanded(
+          // --- 2. Content Section ---
+          SliverToBoxAdapter(
             child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+              padding: const EdgeInsets.all(24.0),
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
@@ -62,87 +64,132 @@ class ImplementPage extends StatelessWidget {
                   topRight: Radius.circular(30),
                 ),
               ),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Modern Rotavator",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          "₹ 85,000",
-                          style: TextStyle(
-                            color: AppColors.primaryTeal,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      "Category: Soil Preparation",
-                      style: TextStyle(color: Colors.grey[600], fontSize: 14),
-                    ),
-                    const SizedBox(height: 20),
-                    const Divider(thickness: 1),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "Description",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "Ye high-performance implement hai jo mitti ko bariq karne aur khet taiyar karne ke liye best hai. Isme heavy-duty blades aur strong frame ka use kiya gaya hai jo har tarah ki mitti mein kaam karta hai. Iska maintenance kaafi low hai aur efficiency bahut high.",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black87,
-                        height: 1.6,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 55,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryTeal,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 2,
-                        ),
-                        onPressed: () {
-                          // Action here
-                        },
-                        child: const Text(
-                          "ENQUIRE NOW",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 1.2,
-                          ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title & Price Row
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Modern Rotavator",
+                              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              "Category: Soil Preparation",
+                              style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                            ),
+                          ],
                         ),
                       ),
+                      Text(
+                        "₹ 85,000",
+                        style: TextStyle(
+                          color: AppColors.primaryTeal,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // Key Specifications (Icons Row)
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildSpecCard(Icons.build_circle_outlined, "Heavy Duty", "Blades"),
+                      _buildSpecCard(Icons.verified_user_outlined, "1 Year", "Warranty"),
+                      _buildSpecCard(Icons.eco_outlined, "High", "Efficiency"),
+                    ],
+                  ),
+
+                  const SizedBox(height: 30),
+                  const Divider(),
+                  const SizedBox(height: 20),
+
+                  // Description Paragraph
+                  const Text(
+                    "Description",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 12),
+                  const Text(
+                    "Ye high-performance implement hai jo mitti ko bariq karne aur khet taiyar karne ke liye best hai. Isme heavy-duty blades aur strong frame ka use kiya gaya hai jo har tarah ki mitti mein kaam karta hai. Iska maintenance kaafi low hai aur efficiency bahut high.",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                      height: 1.6,
+                      letterSpacing: 0.2,
                     ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  ),
+
+                  const SizedBox(height: 100), // Extra space for button
+                ],
               ),
             ),
           ),
+        ],
+      ),
+
+      // --- 3. Floating Bottom Action Button ---
+      bottomSheet: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, -4),
+            ),
+          ],
+        ),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryTeal,
+            minimumSize: const Size(double.infinity, 56),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 0,
+          ),
+          onPressed: () {},
+          child: const Text(
+            "ENQUIRE NOW",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.1,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper Widget for Spec Cards
+  Widget _buildSpecCard(IconData icon, String value, String label) {
+    return Container(
+      width: 100,
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      decoration: BoxDecoration(
+        color: Colors.grey[50],
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey[100]!),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: AppColors.primaryTeal, size: 28),
+          const SizedBox(height: 8),
+          Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+          Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),
     );
