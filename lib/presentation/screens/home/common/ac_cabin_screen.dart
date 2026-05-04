@@ -9,7 +9,7 @@ class AcCabinScreen extends StatelessWidget {
     // Ye aapka data hai jo image 13.png ke hisab se hai
     final List<Map<String, dynamic>> tractors = [
       {
-        'imageUrl': 'lib/presentation/assets/images/ac/1.jpeg', // Apni image ka path badlein
+        'imageUrl': 'assets/images/ac/1.jpeg', // Apni image ka path badlein
         'brand': 'John deere',
         'model': '5130M 4wd',
         'hp': 130,
@@ -18,7 +18,7 @@ class AcCabinScreen extends StatelessWidget {
         'rating': '4.5',
       },
       {
-        'imageUrl': 'lib/presentation/assets/images/ac/2.jpeg',
+        'imageUrl': 'assets/images/ac/2.jpeg',
         'brand': 'New Holland',
         'model': '105 HV 4WD',
         'hp': 106,
@@ -27,7 +27,7 @@ class AcCabinScreen extends StatelessWidget {
         'rating': '4.5',
       },
       {
-        'imageUrl': 'lib/presentation/assets/images/ac/3.jpeg',
+        'imageUrl': 'assets/images/ac/3.jpeg',
         'brand': 'Sonalika',
         'model': '90 rx 4WD',
         'hp': 90,

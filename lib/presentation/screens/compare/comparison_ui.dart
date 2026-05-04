@@ -33,15 +33,15 @@ class ComparisonUIScreen extends StatelessWidget {
                   // Card 1: New Holland vs Swaraj
                   ComparisonItem(
                     title1: "New Holland", model1: "TC 5.30", price1: "Rs. 40.00 Lakh", 
-                    image1: "lib/presentation/assets/images/ac/compare1.jpeg",
+                    image1: "assets/images/ac/compare1.jpeg",
                     title2: "Swaraj", model2: "8200", price2: "Rs. 30.00 Lakh", 
-                    image2: "lib/presentation/assets/images/ac/compare2.jpeg",
+                    image2: "assets/images/ac/compare2.jpeg",
                     onTap: () => Navigator.push(context, MaterialPageRoute(
                       builder: (context) => const HarvesterListPage(
                         title1: "New Holland", model1: "TC 5.30", price1: "Rs. 40.00 Lakh", 
-                        image1: "lib/presentation/assets/images/ac/compare1.jpeg",
+                        image1: "assets/images/ac/compare1.jpeg",
                         title2: "Swaraj", model2: "8200", price2: "Rs. 30.00 Lakh", 
-                        image2: "lib/presentation/assets/images/ac/compare2.jpeg",
+                        image2: "assets/images/ac/compare2.jpeg",
                         engine1: "96 KW", engine2: "73.5 KW",
                         hp1: "130 HP", hp2: "101 HP",
                         cutter1: "15 Ft", cutter2: "14 Ft",
@@ -51,15 +51,15 @@ class ComparisonUIScreen extends StatelessWidget {
                   // Card 2: Kartar vs Swaraj (Jaisa 16.png mein hai)
                   ComparisonItem(
                     title1: "Kartar", model1: "3500", price1: "Rs. 28.72 Lakh", 
-                    image1: "lib/presentation/assets/images/ac/compare3.jpeg",
+                    image1: "assets/images/ac/compare3.jpeg",
                     title2: "Swaraj", model2: "8200", price2: "Rs. 30.00 Lakh", 
-                    image2: "lib/presentation/assets/images/ac/compare2.jpeg",
+                    image2: "assets/images/ac/compare2.jpeg",
                     onTap: () => Navigator.push(context, MaterialPageRoute(
                       builder: (context) => const HarvesterListPage(
                         title1: "Kartar", model1: "3500", price1: "Rs. 28.72 Lakh", 
-                        image1: "lib/presentation/assets/images/ac/compare3.jpeg",
+                        image1: "assets/images/ac/compare3.jpeg",
                         title2: "Swaraj", model2: "8200", price2: "Rs. 30.00 Lakh", 
-                        image2: "lib/presentation/assets/images/ac/compare2.jpeg",
+                        image2: "assets/images/ac/compare2.jpeg",
                         engine1: "56 KW", engine2: "73.5 KW",
                         hp1: "76 HP", hp2: "101 HP",
                         cutter1: "10 Ft", cutter2: "14 Ft",

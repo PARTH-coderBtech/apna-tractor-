@@ -21,7 +21,9 @@ class _HpFilterScreenState extends State<HpFilterScreen> {
         elevation: 1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text(
           "HP Range",
@@ -35,7 +37,11 @@ class _HpFilterScreenState extends State<HpFilterScreen> {
           children: [
             const Text(
               "Select Horsepower Range (In HP)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black54,
+              ),
             ),
             const SizedBox(height: 30),
 
@@ -56,7 +62,9 @@ class _HpFilterScreenState extends State<HpFilterScreen> {
                 activeTrackColor: Colors.black,
                 inactiveTrackColor: Colors.black12,
                 thumbColor: Colors.black,
-                rangeThumbShape: const RoundRangeSliderThumbShape(enabledThumbRadius: 10),
+                rangeThumbShape: const RoundRangeSliderThumbShape(
+                  enabledThumbRadius: 10,
+                ),
               ),
               child: RangeSlider(
                 values: _currentHpValues,
@@ -96,15 +104,23 @@ class _HpFilterScreenState extends State<HpFilterScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryTeal,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 onPressed: () {
-                  // Filter logic: In values ko use karke list filter hogi
-                  Navigator.pop(context);
+                  Navigator.pop(context, <String, dynamic>{
+                    "minHp": _currentHpValues.start,
+                    "maxHp": _currentHpValues.end,
+                  });
                 },
                 child: const Text(
                   "Apply",
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -126,9 +142,15 @@ class _HpFilterScreenState extends State<HpFilterScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+          ),
           const SizedBox(width: 8),
-          Text(label, style: const TextStyle(fontSize: 18, color: Colors.black54)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 18, color: Colors.black54),
+          ),
         ],
       ),
     );

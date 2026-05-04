@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 
-class HarvesterDetailPage extends StatelessWidget {
+class TractorDetailPage extends StatelessWidget {
   final String brand;
   final String model;
   final String price;
   final String hp;
   final String imgPath;
 
-  const HarvesterDetailPage({
+  const TractorDetailPage({
     super.key,
     required this.brand,
     required this.model,
@@ -36,6 +36,7 @@ class HarvesterDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             // 🔶 IMAGE (IMPROVED)
             Container(
               margin: const EdgeInsets.all(16),
@@ -48,7 +49,7 @@ class HarvesterDetailPage extends StatelessWidget {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.08),
                     blurRadius: 10,
-                  ),
+                  )
                 ],
               ),
               child: ClipRRect(
@@ -58,9 +59,9 @@ class HarvesterDetailPage extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => const Center(
                     child: Icon(
-                      Icons.image_not_supported,
-                      size: 90,
-                      color: Colors.grey,
+                      Icons.agriculture,
+                      size: 100,
+                      color: AppColors.primaryTeal,
                     ),
                   ),
                 ),
@@ -72,6 +73,7 @@ class HarvesterDetailPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   // 🔶 BRAND
                   Text(
                     brand.toUpperCase(),
@@ -95,7 +97,7 @@ class HarvesterDetailPage extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // 🔶 PRICE CARD
+                  // 🔶 PRICE CARD (IMPROVED)
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(18),
@@ -125,25 +127,40 @@ class HarvesterDetailPage extends StatelessWidget {
 
                   const SizedBox(height: 25),
 
+                  // 🔶 OVERVIEW
+                  const Text(
+                    "Overview",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  const Text(
+                    "Ye tractor powerful engine ke saath aata hai jo farming ke liye best hai.",
+                    style: TextStyle(color: Colors.black54, height: 1.5),
+                  ),
+
+                  const SizedBox(height: 25),
+
                   // 🔶 SPEC TITLE
                   const Text(
                     "Specifications",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
                   ),
 
                   const SizedBox(height: 15),
 
-                  // 🔶 SPECS
+                  // 🔶 SPECS ROW (IMPROVED SPACING)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: _specTile(Icons.bolt, "Power", hp)),
-                      Expanded(
-                        child: _specTile(Icons.grass, "Cutter Bar", "14 Ft"),
-                      ),
-                      Expanded(
-                        child: _specTile(Icons.settings, "Type", "Self"),
-                      ),
+                      Expanded(child: _spec(Icons.bolt, "Power", hp)),
+                      Expanded(child: _spec(Icons.settings, "Engine", "3 Cyl")),
+                      Expanded(child: _spec(Icons.speed, "Speed", "35 kmph")),
                     ],
                   ),
 
@@ -160,9 +177,21 @@ class HarvesterDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
           color: AppColors.backgroundWhite,
-          boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
+          boxShadow: [
+            BoxShadow(color: Colors.black12, blurRadius: 10)
+          ],
         ),
-        child: Row(
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.primaryTeal,
+            minimumSize: const Size(double.infinity, 55),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+            elevation: 2,
+          ),
+          onPressed: () {},
+          child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Icon(
@@ -182,12 +211,13 @@ class HarvesterDetailPage extends StatelessWidget {
             ),
           ],
         ),
+        ),
       ),
     );
   }
 
   // 🔶 SPEC TILE (IMPROVED)
-  Widget _specTile(IconData icon, String label, String value) {
+  Widget _spec(IconData icon, String title, String value) {
     return Column(
       children: [
         Container(
@@ -201,10 +231,14 @@ class HarvesterDetailPage extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: const TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 14),
         ),
         const SizedBox(height: 2),
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+        Text(
+          title,
+          style: const TextStyle(color: Colors.grey, fontSize: 12),
+        ),
       ],
     );
   }

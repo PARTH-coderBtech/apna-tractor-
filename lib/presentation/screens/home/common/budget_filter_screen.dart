@@ -21,7 +21,9 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
         elevation: 1,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         title: const Text(
           "Budgets",
@@ -35,7 +37,11 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
           children: [
             const Text(
               "Select Your budget (In Rupees)",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.black54),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: Colors.black54,
+              ),
             ),
             const SizedBox(height: 30),
 
@@ -43,8 +49,14 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _buildValueBox(_currentRangeValues.start.round().toString(), "Lakh"),
-                _buildValueBox(_currentRangeValues.end.round().toString(), "Lakh"),
+                _buildValueBox(
+                  _currentRangeValues.start.round().toString(),
+                  "Lakh",
+                ),
+                _buildValueBox(
+                  _currentRangeValues.end.round().toString(),
+                  "Lakh",
+                ),
               ],
             ),
 
@@ -57,7 +69,9 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
                 inactiveTrackColor: Colors.black12,
                 thumbColor: Colors.black,
                 overlayColor: Colors.black.withOpacity(0.1),
-                rangeThumbShape: const RoundRangeSliderThumbShape(enabledThumbRadius: 10),
+                rangeThumbShape: const RoundRangeSliderThumbShape(
+                  enabledThumbRadius: 10,
+                ),
               ),
               child: RangeSlider(
                 values: _currentRangeValues,
@@ -83,7 +97,10 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
                   Text("2 Lakh", style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("200 Lakh", style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text(
+                    "200 Lakh",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             ),
@@ -97,16 +114,23 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryTeal,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
                 onPressed: () {
-                  // Yahan filter logic aayega
-                  print("Selected Range: ${_currentRangeValues.start} to ${_currentRangeValues.end}");
-                  Navigator.pop(context);
+                  Navigator.pop(context, <String, dynamic>{
+                    "minBudget": _currentRangeValues.start,
+                    "maxBudget": _currentRangeValues.end,
+                  });
                 },
                 child: const Text(
                   "Apply",
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -129,9 +153,15 @@ class _BudgetFilterScreenState extends State<BudgetFilterScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(value, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500)),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+          ),
           const SizedBox(width: 8),
-          Text(label, style: const TextStyle(fontSize: 18, color: Colors.black54)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 18, color: Colors.black54),
+          ),
         ],
       ),
     );

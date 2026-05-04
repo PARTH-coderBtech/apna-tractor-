@@ -1,19 +1,18 @@
+import 'package:apna_tractor/presentation/screens/implement/implement_list_page.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/app_images.dart';
 import 'widgets/custom_drawer.dart';
 import 'widgets/category_card.dart';
 
-// Screens for Navigation
+// Screens
 import '../tractor/tractor_list_page.dart';
 import '../harvester/harvester_list_page.dart';
-import '../implement/implement_page.dart'; 
-import 'common/budget_filter_screen.dart'; 
-import 'common/hp_filter_screen.dart'; 
-import 'common/brand_selection_screen.dart'; 
-import 'common/ac_cabin_screen.dart'; 
-
-// Naya Compare Screen Import karein (Apne folder structure ke hisab se check karlein)
+import '../implement/implement_detail_page.dart';
+import 'common/budget_filter_screen.dart';
+import 'common/hp_filter_screen.dart';
+import 'common/brand_selection_screen.dart';
+import 'common/ac_cabin_screen.dart';
 import '../compare/comparison_ui.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -24,52 +23,154 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Navigation index manage karne ke liye
   int _selectedIndex = 0;
 
-  // Click hone par index badalne ka function
+  // ✅ ACTIVE FILTER STATE (NEW ADDITION ONLY)
+  Map<String, dynamic> activeFilters = {};
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
+  void _showResultChoice(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (_) {
+      return Container(
+        padding: const EdgeInsets.all(20),
+        height: 220, // 🔥 thoda increase kiya
+        child: Column(
+          children: [
+            const Text(
+              "Apply Filter On",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            const SizedBox(height: 20),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+
+                // ✅ TRACTOR
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            TractorListPage(filters: activeFilters),
+                      ),
+                    );
+                  },
+                  child: const Text("Tractor"),
+                ),
+
+                // ✅ HARVESTER
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            HarvesterListPage(filters: activeFilters),
+                      ),
+                    );
+                  },
+                  child: const Text("Harvester"),
+                ),
+
+                // 🔥 NEW: IMPLEMENT
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            ImplementListPage(filters: activeFilters),
+                      ),
+                    );
+                  },
+                  child: const Text("Implement"),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
+
   @override
   Widget build(BuildContext context) {
-    // Pages ki list (Index 3 par Compare Screen hai)
-    final List<Widget> _pages = [
-      _buildHomeBody(context), // Index 0: Pura Home ka purana content
-      const Center(child: Text("News Page Content Here")), // Index 1
-      const Center(child: Text("Videos Page Content Here")), // Index 2
-      const ComparisonUIScreen(), // Index 3: Aapka naya Compare Screen
-      const Center(child: Text("Testing Page Content Here")), // Index 4
+    final List<Widget> pages = [
+      _buildHomeBody(context),
+
+      _simplePage("News Page Content Here"),
+      _simplePage("Videos Page Content Here"),
+      const ComparisonUIScreen(),
+      _simplePage("Testing Page Content Here"),
     ];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundWhite,
       drawer: const CustomDrawer(),
-      // Sirf Home index (0) par hi main AppBar dikhega
-      appBar: _selectedIndex == 0 
-        ? AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-            leading: Builder(
-              builder: (context) => IconButton(
-                icon: const Icon(Icons.menu, color: Colors.black, size: 30),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-            ),
-            title: const Row(
-              children: [
-                Icon(Icons.agriculture, color: AppColors.primaryTeal, size: 28),
-                SizedBox(width: 8),
-                Text('ApnaTractor', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+
+      appBar: _selectedIndex == 0
+          ? AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.refresh, color: Colors.black),
+                  onPressed: () {
+                    setState(() {
+                      activeFilters.clear(); // 🔥 RESET ALL FILTERS
+                    });
+
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Filters cleared")),
+                    );
+                  },
+                ),
               ],
-            ),
-          ) 
-        : null, // Baki screens (jaise Compare) apna khud ka AppBar use karengi
-      
-      body: _pages[_selectedIndex],
+              backgroundColor: AppColors.backgroundWhite,
+              elevation: 0,
+              iconTheme: const IconThemeData(color: Colors.black),
+
+              leading: Builder(
+                builder: (context) => IconButton(
+                  icon: const Icon(Icons.menu, size: 28),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
+              ),
+
+              title: const Row(
+                children: [
+                  Icon(
+                    Icons.agriculture,
+                    color: AppColors.primaryTeal,
+                    size: 26,
+                  ),
+
+                  SizedBox(width: 8),
+                  Text(
+                    'ApnaTractor',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : null,
+
+      body: pages[_selectedIndex],
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -81,101 +182,177 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
           BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: "NEWS"),
-          BottomNavigationBarItem(icon: Icon(Icons.play_circle), label: "VIDEOS"),
-          BottomNavigationBarItem(icon: Icon(Icons.compare_arrows), label: "COMPARE"),
-          BottomNavigationBarItem(icon: Icon(Icons.agriculture), label: "TESTING"),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.play_circle),
+            label: "VIDEOS",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.compare_arrows),
+            label: "COMPARE",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.agriculture),
+            label: "TESTING",
+          ),
         ],
       ),
     );
   }
 
-  // --- Home Content Widgets (Aapka Purana Code) ---
+  // ================= HOME BODY =================
+  Widget _simplePage(String text) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.primaryTeal,
+              ),
+            ),
+            const SizedBox(height: 10),
 
-  Widget _buildHomeBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
-              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5))],
+            const Text(
+              "Content will be available soon...",
+              style: TextStyle(color: Colors.grey),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildSearchBar(),
-                const SizedBox(height: 20),
-                const Text("Filter", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 12),
-                _buildFilterList(context), 
-              ],
-            ),
+          ],
+        ),
+      ),
+    );
+  }
+Widget _buildHomeBody(BuildContext context) {
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      return SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: constraints.maxHeight, // 🔥 screen fill karega
           ),
-          
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: IntrinsicHeight( // 🔥 important
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 10),
-                _buildPromoBanner(context),
-                const SizedBox(height: 30),
-                const Text("Explore Items!", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 25),
-                
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CategoryCard(
-                      title: "Tractor", 
-                      icon: Icons.agriculture, 
-                      nextScreen: const TractorDetailPage(), 
+
+                // 🔹 TOP SECTION
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: AppColors.backgroundWhite,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
                     ),
-                    CategoryCard(
-                      title: "Harvester", 
-                      icon: Icons.grain, 
-                      nextScreen: const HarvesterListPage(),
-                    ),
-                    CategoryCard(
-                      title: "Implement", 
-                      icon: Icons.settings_input_component, 
-                      nextScreen: const ImplementPage(),
-                    ),
-                    const CategoryCard(
-                      title: "Equipment", 
-                      icon: Icons.build,
-                    ),
-                  ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.08),
+                        blurRadius: 10,
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildSearchBar(),
+                      const SizedBox(height: 16),
+
+                      const Text(
+                        "Filter",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+
+                      const SizedBox(height: 10),
+                      _buildFilterList(context),
+                    ],
+                  ),
                 ),
+
+                // 🔹 CONTENT
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildPromoBanner(context),
+
+                      const SizedBox(height: 16),
+
+                      const Text(
+                        "Explore Items!",
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        children: [
+                          CategoryCard(
+                            title: "Tractor",
+                            icon: Icons.agriculture,
+                            nextScreen:
+                                TractorListPage(filters: activeFilters),
+                          ),
+                          CategoryCard(
+                            title: "Harvester",
+                            icon: Icons.grain,
+                            nextScreen:
+                                HarvesterListPage(filters: activeFilters),
+                          ),
+                          CategoryCard(
+                            title: "Implement",
+                            icon: Icons.settings_input_component,
+                            nextScreen: const ImplementListPage(),
+                          ),
+                          const CategoryCard(
+                              title: "Equipment", icon: Icons.build),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                // 🔥 THIS IS THE KEY LINE
+                const Spacer(), // bottom space push karega nicely
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      );
+    },
+  );
+}
+
+  // ================= SEARCH =================
 
   Widget _buildSearchBar() {
     return Container(
       height: 50,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.backgroundWhite,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: Colors.grey.shade300),
       ),
       child: const TextField(
         decoration: InputDecoration(
-          hintText: 'Search Awesome....',
+          hintText: 'Search tractors...',
           border: InputBorder.none,
-          contentPadding: EdgeInsets.only(left: 15, top: 12),
-          suffixIcon: Icon(Icons.search, color: Colors.black, size: 28),
+          contentPadding: EdgeInsets.symmetric(horizontal: 15),
+          suffixIcon: Icon(Icons.search, color: Colors.black54),
         ),
       ),
     );
   }
+
+  // ================= FILTER =================
 
   Widget _buildFilterList(BuildContext context) {
     return SizedBox(
@@ -183,18 +360,58 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: [
-          _filterItem(context, "Budget", Icons.account_balance_wallet, const BudgetFilterScreen()),
-          _filterItem(context, "Brand", Icons.branding_watermark, const BrandSelectionScreen(categoryType: 'Tractor')),
-          _filterItem(context, "Hp", Icons.settings, const HpFilterScreen()),
-          _filterItem(context, "Ac cabin", Icons.agriculture, const AcCabinScreen()),
+          _filterItem(
+            context,
+            "Budget",
+            Icons.account_balance_wallet,
+            const BudgetFilterScreen(),
+          ),
+
+          _filterItem(
+            context,
+            "Brand",
+            Icons.branding_watermark,
+            const BrandSelectionScreen(),
+          ),
+
+          _filterItem(context, "HP", Icons.settings, const HpFilterScreen()),
+
+          _filterItem(
+            context,
+            "AC Cabin",
+            Icons.ac_unit,
+            const AcCabinScreen(),
+          ),
         ],
       ),
     );
   }
 
-  Widget _filterItem(BuildContext context, String label, IconData icon, Widget targetScreen) {
+  // 🔥 UPDATED FILTER ITEM (RETURN VALUE HANDLE)
+  Widget _filterItem(
+    BuildContext context,
+    String label,
+    IconData icon,
+    Widget screen,
+  ) {
     return GestureDetector(
-      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => targetScreen)),
+      onTap: () async {
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => screen),
+        );
+
+        if (result != null && result is Map) {
+          setState(() {
+            activeFilters = {
+              ...activeFilters,
+              ...Map<String, dynamic>.from(result),
+            };
+          });
+
+          _showResultChoice(context);
+        }
+      },
       child: _filterChip(label, icon),
     );
   }
@@ -204,7 +421,8 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: Colors.grey.shade300),
+        color: AppColors.backgroundWhite,
       ),
       child: Row(
         children: [
@@ -212,58 +430,89 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(10),
             decoration: const BoxDecoration(
               color: AppColors.primaryTeal,
-              borderRadius: BorderRadius.only(topLeft: Radius.circular(7), bottomLeft: Radius.circular(7)),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(7),
+                bottomLeft: Radius.circular(7),
+              ),
             ),
             child: Icon(icon, color: Colors.white, size: 18),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Text(label, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+            ),
           ),
         ],
       ),
     );
   }
 
+  // ================= PROMO =================
+
   Widget _buildPromoBanner(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const BrandSelectionScreen(categoryType: 'Tractor')));
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const BrandSelectionScreen()),
+        );
       },
       child: Container(
         width: double.infinity,
-        height: 180,
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.accentCream,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.black12),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 8),
+          ],
         ),
-        child: Stack(
+        child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20.0),
+            Expanded(
+              flex: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text("EXPLORE LATEST", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.black87)),
-                  const Text("Launch Tractor Brands", style: TextStyle(fontSize: 14, color: Colors.black54)),
-                  const SizedBox(height: 20),
+                  const Text(
+                    "EXPLORE LATEST",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 5),
+
+                  const Text(
+                    "Tractor Brands",
+                    style: TextStyle(color: Colors.black54),
+                  ),
+
+                  const SizedBox(height: 12),
+
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryTeal, shape: const StadiumBorder()),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryTeal,
+                      shape: const StadiumBorder(),
+                    ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const BrandSelectionScreen(categoryType: 'Tractor')));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const BrandSelectionScreen(),
+                        ),
+                      );
                     },
-                    child: const Text("EXPLORE", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      "EXPLORE",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
             ),
-            Positioned(
-              right: -10, bottom: 0,
-              child: Image.asset(AppImages.tractorBanner, height: 170, fit: BoxFit.contain),
-            ),
+
+            Expanded(flex: 4, child: Image.asset(AppImages.tractorBanner)),
           ],
         ),
       ),

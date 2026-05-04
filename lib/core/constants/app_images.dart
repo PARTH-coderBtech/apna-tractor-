@@ -1,6 +1,6 @@
 class AppImages {
   // Base Path
-  static const String _basePath = 'lib/presentation/assets/images';
+  static const String _basePath = 'assets/images';
   static const String _brandPath = '$_basePath/brands';
   static const String _tractorPath = '$_basePath/tractors';
 
@@ -17,8 +17,14 @@ class AppImages {
   static const String masseyFeguson = '$_brandPath/massey feguason.png';
   static const String newHolland = '$_brandPath/new holland.png';
   static const String powertrac = '$_brandPath/powertrac.png';
-  static const String sonalika = '$_brandPath/sonalika.jpg'; // Note: jpg extension as per your yaml
+  static const String sonalika = '$_brandPath/sonalika.jpg';
   static const String swaraj = '$_brandPath/swaraj.png';
+  static const String ace = '$_brandPath/ace.jpg';
+  static const String preet = '$_brandPath/preet.jpg';
+  static const String vishal = '$_brandPath/vishal.jpg';
+  static const String kartar = '$_brandPath/kartar.png';
+  static const String malkit = '$_brandPath/malkit.jpg';
+  static const String claas = '$_brandPath/class.png';
 
 
   // ac 

@@ -1,194 +1,480 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
+import 'tractor_detail_page.dart';
 
-class TractorDetailPage extends StatelessWidget {
-  final String brand;
-  final String model;
-  final String price;
-  final String hp;
-  final String imgPath;
+class TractorListPage extends StatelessWidget {
+  final String? brandName;
 
-  const TractorDetailPage({
+  // 🔥 NEW: filters added safely
+  final Map<String, dynamic>? filters;
+
+  const TractorListPage({
     super.key,
-    this.brand = "Mahindra",
-    this.model = "Arjun 555",
-    this.price = "7.50 Lakh",
-    this.hp = "50 HP",
-    this.imgPath = "lib/presentation/assets/images/tractors/tractor_banner.png", // Apna path yahan dalein
+    this.brandName,
+    this.filters,
   });
+
+  final List<Map<String, String>> tractors = const [
+    {
+      "brand": "Mahindra",
+      "model": "605 DI 4wd",
+      "price": "10.01 Lakh",
+      "hp": "55 HP",
+      "img": "assets/images/tractors/Mahindra605DI4wd.jpeg",
+    },
+    {
+      "brand": "Swaraj",
+      "model": "744 2wd",
+      "price": "7.37 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/Swaraj7442wd.jpeg",
+    },
+    {
+      "brand": "Swaraj",
+      "model": "969 4wd",
+      "price": "10.50 Lakh",
+      "hp": "66 HP",
+      "img": "assets/images/tractors/Swaraj9694wd.jpeg",
+    },
+    {
+      "brand": "Nova",
+      "model": "605 DI 2wd",
+      "price": "9 Lakh",
+      "hp": "57 HP",
+      "img": "assets/images/tractors/Nova605DI2wd.jpeg",
+    },
+    {
+      "brand": "Swaraj",
+      "model": "855 2wd",
+      "price": "9.00 Lakh",
+      "hp": "55 HP",
+      "img": "assets/images/tractors/tractor_banner.png",
+    },
+    {
+      "brand": "Mahindra",
+      "model": "575 DI 2wd",
+      "price": "6.50 Lakh",
+      "hp": "47 HP",
+      "img": "assets/images/tractors/Mahindra575.jpeg",
+    },
+    {
+      "brand": "Mahindra",
+      "model": "744 2wd",
+      "price": "9.50 Lakh",
+      "hp": "49 HP",
+      "img": "assets/images/tractors/Mahindra744.jpeg",
+    },
+    {
+      "brand": "John Deere",
+      "model": "5050D 2wd",
+      "price": "8.50 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/John Deere50502.jpeg",
+    },
+    {
+      "brand": "John Deere",
+      "model": "5050D 4wd",
+      "price": "10.00 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/John Deere50504.jpeg",
+    },
+    {
+      "brand": "Massey Ferguson",
+      "model": "245 DI",
+      "price": "7.35 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/Massey Ferguson245.jpeg",
+    },
+    {
+      "brand": "Massey Ferguson",
+      "model": "241 DI",
+      "price": "6.90 Lakh",
+      "hp": "42 HP",
+      "img": "assets/images/tractors/MasseyFerguson241.jpeg",
+    },
+     {
+      "brand": "Eicher",
+      "model": "380",
+      "price": "6 Lakh",
+      "hp": "40 HP",
+      "img": "assets/images/tractors/Eicher380.jpeg",
+    },
+     {
+      "brand": "Eicher",
+      "model": "333",
+      "price": "5.50 Lakh",
+      "hp": "36 HP",
+      "img": "assets/images/tractors/Eicher333.jpeg",
+    },
+     {
+      "brand": "Sonalika",
+      "model": "DI 35",
+      "price": "5.50 Lakh",
+      "hp": "39 HP",
+      "img": "assets/images/tractors/Sonalika35.jpeg",
+    },
+     {
+      "brand": "Sonalika",
+      "model": "DI 50 4wd",
+      "price": "8.50 Lakh",
+      "hp": "52 HP",
+      "img": "assets/images/tractors/Sonalika50.jpeg",
+    },
+     {
+      "brand": "Kubota",
+      "model": "MU 4501",
+      "price": "7.85 Lakh",
+      "hp": "45 HP",
+      "img": "assets/images/tractors/Kubota4501.jpeg",
+    },
+     {
+      "brand": "Kubota",
+      "model": "MU 5502",
+      "price": "9.20 Lakh",
+      "hp": "55 HP",
+      "img": "assets/images/tractors/Kubota5502.jpeg",
+    },
+     {
+      "brand": "Farm Trac",
+      "model": "45 PowerMaxx",
+      "price": "7.10 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/Farmtrac45.jpeg",
+    },
+     {
+      "brand": "Farm Trac",
+      "model": "60 PowerMaxx",
+      "price": "7.60 Lakh",
+      "hp": "55 HP",
+      "img": "assets/images/tractors/Farmtrac60.jpeg",
+    },
+     {
+      "brand": "Power Trac",
+      "model": "PP 46 I",
+      "price": "8.40 Lakh",
+      "hp": "55 HP",
+      "img": "assets/images/tractors/Powertrac46.jpeg",
+    },
+     {
+      "brand": "Power Trac",
+      "model": "Euro 50",
+      "price": "7.80 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/Powertrac50.jpeg",
+    },
+     {
+      "brand": "New Holland",
+      "model": "3630 TX SE",
+      "price": "8.80 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/NewHolland3630.jpeg",
+    },
+     {
+      "brand": "New Holland",
+      "model": "3230 NX",
+      "price": "6.40 Lakh",
+      "hp": "42 HP",
+      "img": "assets/images/tractors/NewHolland3230.jpeg",
+    },
+    {
+      "brand": "Deutz Fahr",
+      "model": "Agrolux 50",
+      "price": "8.10 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/Deutz Fahr50.jpeg",
+    },
+    {
+      "brand": "Deutz Fahr",
+      "model": "Agrolux 45",
+      "price": "7.50 Lakh",
+      "hp": "45 HP",
+      "img": "assets/images/tractors/Deuts Fahr 45.jpeg",
+    },
+    {
+      "brand": "Ace",
+      "model": "DI 450 NG",
+      "price": "6.40 Lakh",
+      "hp": "45 HP",
+      "img": "assets/images/tractors/Ace450.jpeg",
+    },
+    {
+      "brand": "Ace",
+      "model": "DI 550 NG",
+      "price": "6.45 Lakh",
+      "hp": "50 HP",
+      "img": "assets/images/tractors/Ace550.jpeg",
+    },
+  ];
+
+  // ================= FILTER LOGIC =================
+
+ List<Map<String, String>> getFilteredList() {
+    List<Map<String, String>> list = tractors;
+
+    if (filters == null) return list;
+
+    if (filters!["brand"] != null) {
+      list =
+          list.where((t) => t["brand"] == filters!["brand"]).toList();
+    }
+
+    if (filters!["minHp"] != null &&
+        filters!["maxHp"] != null) {
+      list = list.where((t) {
+        int hp = int.parse(t["hp"]!.split(" ")[0]);
+        return hp >= filters!["minHp"] &&
+            hp <= filters!["maxHp"];
+      }).toList();
+    }
+
+    if (filters!["minBudget"] != null &&
+        filters!["maxBudget"] != null) {
+      list = list.where((t) {
+        double price =
+            double.parse(t["price"]!.replaceAll(" Lakh", ""));
+        return price >= filters!["minBudget"] &&
+            price <= filters!["maxBudget"];
+      }).toList();
+    }
+
+    return list;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final list = getFilteredList();
+
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: CustomScrollView(
-        slivers: [
-          // --- 1. Top Image Section (Premium App Bar Style) ---
-          SliverAppBar(
-            expandedHeight: 350,
-            pinned: true,
-            backgroundColor: AppColors.primaryTeal,
-            leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                backgroundColor: Colors.white.withOpacity(0.8),
-                child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-            ),
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                imgPath,
-                fit: BoxFit.cover, // Poori screen cover karega
-              ),
-            ),
-          ),
+      backgroundColor: AppColors.backgroundWhite,
 
-          // --- 2. Details Content ---
-          SliverToBoxAdapter(
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // --- Description Paragraph First ---
-                  const Text(
-                    "About this Tractor",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Ye tractor high-performance engine ke saath aata hai jo kheti ke bade kaamo ko asani se poora karta hai. Iska fuel consumption bahut kam hai aur maintenance ka kharcha bhi na ke barabar hai. Bharat ke kisanon ki pehli pasand jo har mausam mein saath nibhaye.",
-                    style: TextStyle(fontSize: 15, color: Colors.black87, height: 1.6, letterSpacing: 0.3),
-                  ),
+      appBar: AppBar(
+        backgroundColor: AppColors.primaryTeal,
+        foregroundColor: Colors.white,
+        title: Text(
+          brandName != null
+              ? "$brandName Tractors"
+              : "Tractors",
+        ),
+      ),
 
-                  const SizedBox(height: 30),
-                  const Divider(),
-                  const SizedBox(height: 20),
+      // ================= EMPTY =================
+      body: list.isEmpty
+          ? const Center(child: Text("No tractors found"))
 
-                  // --- Brand & Model (Premium Card Design) ---
-                  Row(
-                    children: [
-                      _infoCard("Brand", brand, Icons.stars),
-                      const SizedBox(width: 15),
-                      _infoCard("Model", model, Icons.agriculture),
-                    ],
-                  ),
-                  
-                  const SizedBox(height: 15),
+          // ================= LIST =================
+          : ListView.builder(
+              padding: const EdgeInsets.all(15),
+              itemCount: list.length,
+              itemBuilder: (context, index) {
+                final tractor = list[index];
 
-                  // --- Price Section ---
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [AppColors.primaryTeal.withOpacity(0.1), Colors.white],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => TractorDetailPage(
+                          brand: tractor["brand"]!,
+                          model: tractor["model"]!,
+                          price: tractor["price"]!,
+                          hp: tractor["hp"]!,
+                          imgPath: tractor["img"]!,
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: AppColors.primaryTeal.withOpacity(0.2)),
+                    );
+                  },
+
+                  child: Container(
+                    margin:
+                        const EdgeInsets.only(bottom: 15),
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.circular(16),
+                      border: Border.all(
+                          color: Colors.grey.shade300),
                     ),
+
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("On-Road Price", style: TextStyle(color: Colors.grey, fontSize: 14)),
-                        const SizedBox(height: 5),
-                        Text(
-                          "₹ $price onwards",
-                          style: TextStyle(color: AppColors.primaryTeal, fontWeight: FontWeight.bold, fontSize: 26),
+                        Row(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                          children: [
+                            // IMAGE
+                            Image.asset(
+                              tractor["img"]!,
+                              height: 90,
+                              width: 110,
+                              fit: BoxFit.contain,
+                              errorBuilder:
+                                  (context, error, stackTrace) {
+                                return const Icon(
+                                    Icons.image_not_supported);
+                              },
+                            ),
+
+                            const SizedBox(width: 10),
+
+                            // TEXT
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    tractor["brand"]!,
+                                    style: const TextStyle(
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+
+                                  Text(
+                                    tractor["model"]!,
+                                    style:
+                                        const TextStyle(
+                                      fontSize: 22,
+                                      fontWeight:
+                                          FontWeight.bold,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 6),
+
+                                  Row(
+                                    children: [
+                                      const Icon(
+                                          Icons.flash_on,
+                                          size: 16),
+                                      const SizedBox(
+                                          width: 4),
+                                      Text(
+                                          tractor["hp"]!),
+
+                                      const SizedBox(
+                                          width: 15),
+                                    ],
+                                  ),
+
+                                  const SizedBox(
+                                      height: 10),
+
+                                  RichText(
+                                    text: TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text:
+                                              "Rs. ${tractor["price"]} ",
+                                          style:
+                                              const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight:
+                                                FontWeight
+                                                    .bold,
+                                            color:
+                                                Colors.black,
+                                          ),
+                                        ),
+                                        const TextSpan(
+                                          text: "onwards",
+                                          style: TextStyle(
+                                              color:
+                                                  Colors.grey),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  const Text(
+                                    "On - Road Price, of your city",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            // RIGHT SIDE
+                            Column(
+                              children: [
+                                Container(
+                                  padding:
+                                      const EdgeInsets
+                                          .symmetric(
+                                          horizontal: 6,
+                                          vertical: 2),
+                                  decoration:
+                                      BoxDecoration(
+                                    color: AppColors
+                                        .primaryTeal,
+                                    borderRadius:
+                                        BorderRadius
+                                            .circular(6),
+                                  ),
+                                  child: const Row(
+                                    children: [
+                                      Icon(Icons.star,
+                                          color:
+                                              Colors.white,
+                                          size: 12),
+                                      SizedBox(width: 2),
+                                      Text("4.5",
+                                          style: TextStyle(
+                                              color: Colors
+                                                  .white,
+                                              fontSize:
+                                                  12)),
+                                    ],
+                                  ),
+                                ),
+
+                                const SizedBox(
+                                    height: 25),
+
+                                const Icon(Icons
+                                    .favorite_border),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // BUTTON
+                        Align(
+                          alignment:
+                              Alignment.centerLeft,
+                          child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 8),
+                            decoration: BoxDecoration(
+                              color: AppColors
+                                  .primaryTeal,
+                              borderRadius:
+                                  BorderRadius.circular(
+                                      20),
+                            ),
+                            child: const Text(
+                              "VIEW TRACTOR",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight:
+                                    FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
-
-                  const SizedBox(height: 30),
-                  const Text("Specifications", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 20),
-
-                  // --- Key Specs Icons ---
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _specItem(Icons.bolt, hp, "Max Power"),
-                      _specItem(Icons.settings, "3 Cyl", "Engine"),
-                      _specItem(Icons.speed, "35 kmph", "Max Speed"),
-                    ],
-                  ),
-
-                  const SizedBox(height: 120), // Padding for Bottom Button
-                ],
-              ),
+                );
+              },
             ),
-          ),
-        ],
-      ),
-      
-      // --- Floating Bottom Button ---
-      bottomSheet: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10)],
-        ),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryTeal,
-            minimumSize: const Size(double.infinity, 55),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          ),
-          onPressed: () {},
-          child: const Text(
-            "CHECK ON-ROAD PRICE",
-            style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ),
-      ),
-    );
-  }
-
-  // Small Info Cards for Brand/Model
-  Widget _infoCard(String label, String value, IconData icon) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey.shade200),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, size: 20, color: Colors.grey),
-            const SizedBox(height: 8),
-            Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-            Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Spec Item Layout
-  Widget _specItem(IconData icon, String value, String label) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: AppColors.primaryTeal.withOpacity(0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: AppColors.primaryTeal, size: 24),
-        ),
-        const SizedBox(height: 8),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
-        Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-      ],
     );
   }
 }

@@ -22,25 +22,74 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/presentation/assets/images/tractors/tractor_banner.png
-    - lib/presentation/assets/images/brands/deutz fahr.png
-    - lib/presentation/assets/images/brands/eicher.png
-    - lib/presentation/assets/images/brands/farmtrac.png
-    - lib/presentation/assets/images/brands/john deere.png
-    - lib/presentation/assets/images/brands/kabota.png
-    - lib/presentation/assets/images/brands/mahindra.png
-    - lib/presentation/assets/images/brands/massey feguason.png
-    - lib/presentation/assets/images/brands/new holland.png
-    - lib/presentation/assets/images/brands/powertrac.png
-    - lib/presentation/assets/images/brands/sonalika.jpg
-    - lib/presentation/assets/images/brands/swaraj.png
-    - lib/presentation/assets/images/ac/1.jpeg
-    - lib/presentation/assets/images/ac/2.jpeg
-    - lib/presentation/assets/images/ac/3.jpeg
-    - lib/presentation/assets/images/ac/compare1.jpeg
-    - lib/presentation/assets/images/ac/compare2.jpeg
-    - lib/presentation/assets/images/ac/compare3.jpeg
-
-
+    - assets/images/tractors/tractor_banner.png
+    - assets/images/brands/deutz fahr.png
+    - assets/images/brands/eicher.png
+    - assets/images/brands/farmtrac.png
+    - assets/images/brands/john deere.png
+    - assets/images/brands/kabota.png
+    - assets/images/brands/mahindra.png
+    - assets/images/brands/massey feguason.png
+    - assets/images/brands/new holland.png
+    - assets/images/brands/powertrac.png
+    - assets/images/brands/sonalika.jpg
+    - assets/images/brands/swaraj.png
+    - assets/images/brands/ace.jpg
+    - assets/images/brands/vishal.jpg
+    - assets/images/brands/preet.jpg
+    - assets/images/brands/kartar.png
+    - assets/images/brands/class.png
+    - assets/images/brands/malkit.jpg
+    - assets/images/ac/1.jpeg
+    - assets/images/ac/2.jpeg
+    - assets/images/ac/3.jpeg
+    - assets/images/ac/compare1.jpeg
+    - assets/images/ac/compare2.jpeg
+    - assets/images/ac/compare3.jpeg
+    - assets/images/tractors/Mahindra605DI4wd.jpeg
+    - assets/images/tractors/Swaraj7442wd.jpeg
+    - assets/images/tractors/Swaraj9694wd.jpeg
+    - assets/images/tractors/Nova605DI2wd.jpeg
+    - assets/images/tractors/Mahindra575.jpeg
+    - assets/images/tractors/Mahindra744.jpeg
+    - assets/images/tractors/John Deere50502.jpeg
+    - assets/images/tractors/John Deere50504.jpeg
+    - assets/images/tractors/Massey Ferguson245.jpeg
+    - assets/images/tractors/MasseyFerguson241.jpeg
+    - assets/images/tractors/Ace450.jpeg
+    - assets/images/tractors/Ace550.jpeg
+    - assets/images/tractors/Deuts Fahr 45.jpeg
+    - assets/images/tractors/Deutz Fahr50.jpeg
+    - assets/images/tractors/Eicher333.jpeg
+    - assets/images/tractors/Eicher380.jpeg
+    - assets/images/tractors/Farmtrac45.jpeg
+    - assets/images/tractors/Farmtrac60.jpeg
+    - assets/images/tractors/Kubota4501.jpeg
+    - assets/images/tractors/Kubota5502.jpeg
+    - assets/images/tractors/Nova605DI2wd.jpeg
+    - assets/images/tractors/Powertrac46.jpeg
+    - assets/images/tractors/Powertrac50.jpeg
+    - assets/images/tractors/Sonalika35.jpeg
+    - assets/images/tractors/Sonalika50.jpeg
+    - assets/images/tractors/NewHolland3230.jpeg
+    - assets/images/tractors/NewHolland3630.jpeg
+    - assets/images/harvestors/Kartar.jpeg
+    - assets/images/implements/johndeere.jpeg
+    - assets/images/harvestors/Johndeere.jpeg
+    - assets/images/harvestors/Kubota.jpeg
+    - assets/images/harvestors/MahindraH12.jpeg
+    - assets/images/harvestors/NewHolland5.30.jpeg
+    - assets/images/harvestors/NewHolland480.jpeg
+    - assets/images/harvestors/Preet.jpeg
+    - assets/images/harvestors/Sonalika.jpeg
+    - assets/images/harvestors/Swaraj8200.jpeg
+    - assets/images/harvestors/Vishal.jpeg
+    - assets/images/harvestors/Vishal.jpeg
+    - assets/images/implements/Cultivator.jpeg
+    - assets/images/implements/PotatoPlanter.jpeg
+    - assets/images/implements/Rotavator.jpeg
+    - assets/images/implements/StrawReaper.jpeg
+    - assets/images/implements/Cultivator2.jpeg
+    
 
 

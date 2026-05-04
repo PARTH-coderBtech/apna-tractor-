@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../../../core/constants/colors.dart';
 
-class HarvesterDetailPage extends StatelessWidget {
+class ImplementDetailPage extends StatelessWidget {
   final String brand;
   final String model;
   final String price;
   final String hp;
   final String imgPath;
 
-  const HarvesterDetailPage({
+  const ImplementDetailPage({
     super.key,
     required this.brand,
     required this.model,
@@ -22,6 +22,7 @@ class HarvesterDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundWhite,
 
+      // 🔷 APP BAR
       appBar: AppBar(
         backgroundColor: AppColors.primaryTeal,
         elevation: 0,
@@ -36,55 +37,49 @@ class HarvesterDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 🔶 IMAGE (IMPROVED)
+
+            // 🔶 IMAGE SECTION
             Container(
-              margin: const EdgeInsets.all(16),
-              height: 220,
+              height: 260,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.accentCream.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  imgPath,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => const Center(
-                    child: Icon(
-                      Icons.image_not_supported,
-                      size: 90,
-                      color: Colors.grey,
-                    ),
-                  ),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(25),
+                  bottomRight: Radius.circular(25),
                 ),
+              ),
+              child: Image.asset(
+                imgPath,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(
+                    Icons.agriculture,
+                    size: 100,
+                    color: AppColors.primaryTeal,
+                  );
+                },
               ),
             ),
 
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 🔶 BRAND
+
+                  // 🔷 BRAND
                   Text(
-                    brand.toUpperCase(),
+                    brand,
                     style: const TextStyle(
-                      fontSize: 14,
                       color: AppColors.primaryTeal,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
 
                   const SizedBox(height: 6),
 
-                  // 🔶 MODEL
+                  // 🔷 MODEL
                   Text(
                     model,
                     style: const TextStyle(
@@ -101,7 +96,7 @@ class HarvesterDetailPage extends StatelessWidget {
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
                       color: AppColors.accentCream,
-                      borderRadius: BorderRadius.circular(18),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +105,7 @@ class HarvesterDetailPage extends StatelessWidget {
                           "Starting Price",
                           style: TextStyle(color: Colors.black54),
                         ),
-                        const SizedBox(height: 6),
+                        const SizedBox(height: 5),
                         Text(
                           "₹ $price onwards",
                           style: const TextStyle(
@@ -125,25 +120,41 @@ class HarvesterDetailPage extends StatelessWidget {
 
                   const SizedBox(height: 25),
 
-                  // 🔶 SPEC TITLE
+                  // 🔷 OVERVIEW
                   const Text(
-                    "Specifications",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    "Overview",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
 
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
 
-                  // 🔶 SPECS
+                  const Text(
+                    "Ye implement farming efficiency ko improve karta hai aur different field operations ke liye use hota hai.",
+                    style: TextStyle(color: Colors.black54),
+                  ),
+
+                  const SizedBox(height: 25),
+
+                  // 🔷 SPECIFICATIONS
+                  const Text(
+                    "Specifications",
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(child: _specTile(Icons.bolt, "Power", hp)),
-                      Expanded(
-                        child: _specTile(Icons.grass, "Cutter Bar", "14 Ft"),
-                      ),
-                      Expanded(
-                        child: _specTile(Icons.settings, "Type", "Self"),
-                      ),
+                      Expanded(child: _specTile(Icons.settings, "Type", "Farm Use")),
+                      Expanded(child: _specTile(Icons.build, "Usage", "Multi-purpose")),
                     ],
                   ),
 
@@ -155,29 +166,40 @@ class HarvesterDetailPage extends StatelessWidget {
         ),
       ),
 
-      // 🔶 BUTTON (IMPROVED)
+      // 🔶 BOTTOM BUTTON
       bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(15),
         decoration: const BoxDecoration(
           color: AppColors.backgroundWhite,
           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Icon(
-              Icons.chat,
-              color: Colors.white,
-              size: 20,
-            ),
-            SizedBox(width: 8),
-
-            Text(
-              "ENQUIRE NOW AT 7351002972",
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 1,
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryTeal,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.chat, color: Colors.white),
+                    SizedBox(width: 8),
+                    Text(
+                      "ENQUIRE NOW",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -186,7 +208,7 @@ class HarvesterDetailPage extends StatelessWidget {
     );
   }
 
-  // 🔶 SPEC TILE (IMPROVED)
+  // 🔷 SPEC TILE
   Widget _specTile(IconData icon, String label, String value) {
     return Column(
       children: [
@@ -196,15 +218,16 @@ class HarvesterDetailPage extends StatelessWidget {
             color: AppColors.primaryTeal.withOpacity(0.1),
             shape: BoxShape.circle,
           ),
-          child: Icon(icon, color: AppColors.primaryTeal, size: 20),
+          child: Icon(icon, color: AppColors.primaryTeal),
         ),
         const SizedBox(height: 8),
+        Text(label,
+            style: const TextStyle(fontSize: 12, color: Colors.grey)),
         Text(
           value,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          style: const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold),
         ),
-        const SizedBox(height: 2),
-        Text(label, style: const TextStyle(color: Colors.grey, fontSize: 12)),
       ],
     );
   }
